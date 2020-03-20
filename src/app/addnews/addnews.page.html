@@ -1,0 +1,190 @@
+<ion-content style="--background: #eeeeee">
+  <div class="all" style="display: flex;align-items: center;justify-content: center;width: 100vw;">
+    <div class="hambalang" style="width: 963px;height: 523px;display: flex;">
+
+      <!-- <div style='overflow-y: scroll!important;'> style="width: 963px; height: 100px; background-color: rgba(185, 134, 87, 0.8); padding: 10px; display: flex; justify-content: space-between;" -->
+        <div class="top" style="width: 100%;">
+          <div style="display: flex;">
+            <div style="width: 30px; height: 30px; padding: 5px; display: flex; justify-content: center; align-items: center; background: rgba(255, 255, 255,1);border-radius: 50%;">
+              <ion-icon style="width: 30px; height: 30px; color: saddlebrown;" name="chevron-back-outline"
+                (click)="back()">
+              </ion-icon>
+            </div>
+          </div>
+          <div style="display: flex;">
+            <div style="width: 30px; height: 30px; padding: 5px; display: flex; justify-content: center; align-items: center; background: rgba(255, 255, 255, 1); border-radius: 50%;">
+              <ion-icon style="width: 30px; height: 30px; color: saddlebrown ;" name="checkmark-outline"
+                (click)="create()">
+              </ion-icon>
+            </div>
+          </div>
+        </div>
+
+        <div
+          style="width: 963px; display: flex; justify-content: space-evenly; align-items: flex-start; padding: 10px;">
+
+          <!-- no image inserted -->
+          <div
+            style="width: 400px; background-color: #ffffff; box-shadow: 2px 2px 5px -4px rgba(0,0,0,0.75); border-radius: 5px;"
+            *ngIf="lengthof(photo) == 0">
+            <div style="padding: 20px;">
+              <div style="width: 100%; display: flex; align-items: center; justify-content: center;">
+                <img style="width: 300px; height: 300px; object-fit: cover;" src="https://i.gifer.com/VdOY.gif" alt="">
+              </div>
+              <div style="padding: 10px 0px; border-bottom: 1px solid #eeeeee;"></div>
+              <div style="width: 100%; display: flex; align-items: center; justify-content: center; margin-top: 10px;">
+                <div
+                  style="text-decoration: none; background-color: #eeeeee; display: flex; align-items: center; justify-content: center; color: #2c2c2c; font-size: 16px; padding: 10px; border-radius: 5px;">
+                  <label for='files'>
+                    Add Photo
+                  </label>
+                  <input id="files" style='opacity:0;position:absolute;height:100%;width:100%;display:none;'
+                    accept="image/*" type="file" value="" (change)="fileChange($event , -1)">
+                  <canvas style="display: none;" id="canvas"></canvas>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- image inserted -->
+          <div style="overflow-x: scroll;" *ngIf="lengthof(photo) !== 0">
+            <div
+              style="width: 400px; background-color: #ffffff; box-shadow: 2px 2px 5px -4px rgba(0,0,0,0.75); padding: 20px 0px 20px 0px;  margin-bottom: 10px; position: relative; display: flex; align-items: center; justify-content: center; border-radius: 5px;">
+              <div style="display: flex; align-items: center; justify-content: center;">
+                <img style="width: 300px; height: 200px; object-fit: cover;" src={{photo[highlight].imagec}} alt="">
+              </div>
+              <ion-icon style="position: absolute; left: 0; font-size: 30px; color: #999999;" name="caret-back-outline"
+                (click)="prev(highlight)">
+              </ion-icon>
+              <ion-icon style="position: absolute; right: 0; font-size: 30px; color: #999999;"
+                name="caret-forward-outline" (click)="next(highlight)">
+              </ion-icon>
+            </div>
+            <div style="width: 400px; display: flex; flex-wrap: wrap;">
+              <div
+                style="width: 127px; height: 127px; display: flex; align-items: center; justify-content: center; background-color: #ffffff; margin: 3px; box-shadow: 2px 2px 5px -4px rgba(0,0,0,0.75);">
+                <label for="{{'filesx'+i}}">
+                  <ion-icon style="font-size: 25px; color: #272727;" name="add-outline"></ion-icon>
+                </label>
+                <input id="{{'filesx'+i}}" style='opacity:0;position:absolute;height:100%;width:100%;display:none;'
+                  accept="image/*" type="file" value="" (change)="fileChange($event , i)">
+                <canvas style="display: none;" id="canvas"></canvas>
+              </div>
+              <div
+                style="width: 127px; height: 127px; display: flex; align-items: center; justify-content: center; background-color: #ffffff; margin: 3px; position: relative; box-shadow: 2px 2px 5px -4px rgba(0,0,0,0.75);"
+                *ngFor="let item of photo; let i = index">
+                <ion-icon
+                  style="position: absolute; top: 5px; right: 5px; z-index: 1000; color: #e45151; background-color: #ffffff; border-radius: 50%; padding: 5px;"
+                  name="trash-outline" (click)="delete_photo(i)"></ion-icon>
+                <img (click)='highlight=i' style="width: 127px; height: 127px; object-fit: cover;" src={{item.imagec}}
+                  alt="">
+              </div>
+            </div>
+          </div>
+
+          <div class="texta"
+            style="width: 50%; background-color: #ffffff; box-shadow: 2px 2px 5px -4px rgba(0,0,0,0.75); border-radius: 5px;">
+              <div style="margin-bottom: 10px;">
+                <div style="display: flex; align-items: center;">
+                  <ion-label>Title</ion-label>
+                  <ion-icon style="color: #999999;" name="help-circle-outline"></ion-icon>
+                </div>
+                <ion-input type="text" placeholder="News Title" [(ngModel)]="news.title"></ion-input>
+              </div>
+
+              <div class="type" style="display: flex;flex-direction: column;margin-bottom: 10px;width: 100%;">
+                <!-- <ion-item style="display: flex;flex-direction: column;"> -->
+                <div class="typename" style="display: flex; align-items: center;">
+                  <ion-label>Type</ion-label>
+                  <ion-icon style="color: #999999;" name="help-circle-outline"></ion-icon>
+                </div>
+                <div class="choose">
+                  <!-- style="display: flex;width: 50%;" -->
+                  <ion-select style="display: flex;justify-content: flex-end; width: 50%;" placeholder="Select Type"
+                    [(ngModel)]="news.type">
+                    <ion-select-option value="Treatment">Treatment</ion-select-option>
+                    <ion-select-option value="Product">Product</ion-select-option>
+                  </ion-select>
+                </div>
+                <div class="product" *ngIf="news.type == 'Product'"
+                  style="display: flex;justify-content: space-between;padding: 10px;">
+                  <div class="prod" style="width: 45%;">
+                    <ion-label>Product Name</ion-label>
+                    <ion-input style="background-color: #eeeeee;font-size: 14px;border-radius: 5px;" type="text"
+                      placeholder="Product Name" [(ngModel)]="news.proname">
+                    </ion-input>
+                  </div>
+                </div>
+                <!-- </ion-item> -->
+              </div>
+
+              <div class="date">
+                <div style="display: flex; align-items: center;">
+                  <ion-label>Start Date & Expired Date</ion-label>
+                  <ion-icon style="color: #999999;" name="help-circle-outline"></ion-icon>
+                </div>
+
+                <div class="selectdate" style="display: flex;justify-content: space-between;padding: 10px;">
+                  <div class="stdate" style="width: 45%;">
+                    <ion-label>Start Date</ion-label>
+                    <ion-datetime [(ngModel)]="news.stadate"
+                      style="background-color: #eeeeee;font-size: 14px;border-radius: 5px;"
+                      displayFormat="DDD. DD MMM YYYY">
+                    </ion-datetime>
+                  </div>
+                  <div class="exdate" style="width: 45%;">
+                    <ion-label>Expired Date</ion-label>
+                    <ion-datetime [(ngModel)]="news.exdate"
+                      style="background-color: #eeeeee;font-size: 14px;border-radius: 5px;"
+                      displayFormat="DDD. DD MMM YYYY">
+                    </ion-datetime>
+                  </div>
+                </div>
+              </div>
+
+              <div class="price">
+                <div style="display: flex; align-items: center;">
+                  <ion-label>Price</ion-label>
+                  <ion-icon style="color: #999999;" name="help-circle-outline"></ion-icon>
+                </div>
+
+                <div class="priced" style="display: flex;justify-content: space-between;padding: 10px;">
+                  <div class="bprice" style="width: 45%;">
+                    <ion-label>Price</ion-label>
+                    <ion-input style="background-color: #eeeeee;font-size: 14px;border-radius: 5px;" type="number"
+                      placeholder="Price Before" [(ngModel)]="news.bprice">
+                    </ion-input>
+                  </div>
+                  <div class="netpri" style="width: 45%;">
+                    <ion-label>Price Net</ion-label>
+                    <ion-input style="background-color: #eeeeee;font-size: 14px;border-radius: 5px;" type="number"
+                      placeholder="Net Price" [(ngModel)]="news.netprice">
+                    </ion-input>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-bottom: 10px;">
+                <div style="display: flex; align-items: center;">
+                  <ion-label>Short Description</ion-label>
+                  <ion-icon style="color: #999999;" name="help-circle-outline"></ion-icon>
+                </div>
+                <ion-textarea type="text" rows="6" cols="20" placeholder="News Description"
+                  [(ngModel)]="news.short_desc">
+                </ion-textarea>
+              </div>
+
+              <div style="margin-bottom: 10px;">
+                <div style="display: flex; align-items: center;">
+                  <ion-label>Description</ion-label>
+                  <ion-icon style="color: #999999;" name="help-circle-outline"></ion-icon>
+                </div>
+                <ion-textarea type="text" rows="6" cols="20" placeholder="News Description" [(ngModel)]="news.desc">
+                </ion-textarea>
+              </div>
+          </div>
+        </div>
+      <!-- </div> -->
+    </div>
+  </div>
+</ion-content>

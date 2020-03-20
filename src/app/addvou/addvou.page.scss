@@ -1,0 +1,35 @@
+ion-label {
+  margin-right: 10px;
+  font-size: 14px;
+  font-weight: 300;
+  color: #212f3c;
+}
+
+ion-input {
+  --padding-start: 10px;
+  --placeholder-color: #999999;
+  --background: #eeeeee;
+  font-size: 14px;
+  border-radius: 5px;
+  margin-top: 10px;
+  --placeholder-font-weight: 300;
+}
+
+ion-textarea {
+  --padding-start: 10px;
+  --placeholder-color: #999999;
+  --background: #eeeeee;
+  border-radius: 5px;
+  margin-top: 10px;
+  --placeholder-font-weight: 300;
+}
+
+ion-select {
+  --padding-start: 10px;
+  --padding-end: 10px;
+  --placeholder-color: #999999;
+  background-color: #eeeeee;
+  border-radius: 5px;
+  margin-top: 10px;
+  --placeholder-font-weight: 300;
+}
